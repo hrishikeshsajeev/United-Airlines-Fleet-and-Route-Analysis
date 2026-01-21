@@ -245,8 +245,8 @@ Download the following datasets from [BTS TranStats](https://www.transtats.bts.g
 
 **Hrishikesh Sajeev**
 
-- [LinkedIn](#) *(Add your LinkedIn)*
-- [Portfolio](#) *(Add your portfolio)*
+- [LinkedIn](https://www.linkedin.com/in/hrishikeshsajeev05/)
+- [Portfolio](https://portfolio-alpha-nine-1c5as202t8.vercel.app)
 
 ---
 
