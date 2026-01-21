@@ -1,15 +1,15 @@
-# ✈️ United Airlines Route Profitability Analysis
+# United Airlines Route Profitability Analysis
 
 ![Fleet Analysis Dashboard](dashboards/fleet_analysis_dashboard.png)
 > *An interactive diagnostic tool for analyzing network efficiency, fleet performance, and unit economics.*
 
 ---
 
-## 📖 Project Overview
+##  Project Overview
 
 This project was designed to solve a critical business problem for a mid-sized airline: **identifying which specific routes and aircraft are "bleeding cash" (Negative Operating Contribution).** By visualizing **Unit Economics (RASM vs. CASM)** and **Operating Contribution**, this dashboard moves beyond simple "Revenue" metrics to reveal true profitability. It serves as a "Hub-and-Spoke" diagnostic tool, allowing executives to drill down from a global network view to individual flight performance.
 
-### 🎯 Key Business Questions Answered
+###  Key Business Questions Answered
 
 - **Network Health:** Which hubs are driving profit, and which are dragging down margins?
 - **Route Efficiency:** Which specific routes (e.g., ORD → MIA) are operating at a loss?
@@ -18,7 +18,7 @@ This project was designed to solve a critical business problem for a mid-sized a
 
 ---
 
-## 📊 Data Pipeline
+##  Data Pipeline
 
 ### Data Sources
 
@@ -56,14 +56,13 @@ The [`clean and merge.sql`](sql/clean%20and%20merge.sql) script performs:
 
 1. **Data Cleaning:** Removes ferry/maintenance flights (< 20 passengers)
 2. **Traffic Aggregation:** Groups by Origin, Destination, and Aircraft Type
-3. **Fare Analysis:** Categorizes fares into tiers (Award, Ultra-Low, Standard)
-4. **Price Calculation:** Computes weighted average fares per route
-5. **Cost Integration:** Joins aircraft hourly operating costs from Form 41
-6. **Final Merge:** Creates unified route financial dataset
+3. **Price Calculation:** Computes weighted average fares per route
+4. **Cost Integration:** Joins aircraft hourly operating costs from Form 41
+5. **Final Merge:** Creates unified route financial dataset
 
 ---
 
-## 📈 Key Metrics & Calculations
+##  Key Metrics & Calculations
 
 ### Financial Performance
 
@@ -92,29 +91,25 @@ The [`clean and merge.sql`](sql/clean%20and%20merge.sql) script performs:
 
 ---
 
-## 🛠️ Technical Implementation
+##  Technical Implementation
 
 Built in **Tableau**, utilizing advanced data modeling and visualization techniques:
 
-### 1. Geospatial & Network Analysis
 
-- **Dual-Axis Map Layers:** Created a custom map separating **Hubs (Origin)** and **Spokes (Destination)** to solve data overlap issues and allow for clear "Hub-to-Spoke" visualization.
-- **Spatial Drill-Downs:** Implemented logic to visualize network connections without cluttering the UI.
-
-### 2. Advanced Logic & Calculations
+### 1. Advanced Logic & Calculations
 
 - **Context Filters:** Applied "Add to Context" logic to fix Order of Operations errors, ensuring "Top 10 / Bottom 10" rankings calculate dynamically *after* a specific Hub is selected.
 - **Set Actions:** Utilized Tableau Sets for dynamic cohort analysis that adapts to user selection.
 - **String Manipulation:** Created custom "Route Keys" (`Origin + " to " + Dest`) to bridge data granularity gaps between different datasets.
 
-### 3. Dashboard Interactivity (The "Diagnostic Flow")
+### 2. Dashboard Interactivity
 
 - **Cross-Filtering Actions:** Clicking a Hub filters the entire dashboard (Scatter Plots, Fleet Analysis, Rankings).
 - **Highlight Actions:** Configured multi-dimensional highlighting—selecting a route on the scatter plot instantly highlights the specific aircraft responsible in the Fleet Matrix.
 
 ---
 
-## 📸 Dashboard Screenshots
+##  Dashboard Screenshots
 
 ### Fleet Analysis Dashboard
 ![Fleet Analysis](dashboards/fleet_analysis_dashboard.png)
@@ -122,7 +117,7 @@ Built in **Tableau**, utilizing advanced data modeling and visualization techniq
 Key visualizations:
 - **Network Map:** Hub-and-spoke visualization with size indicating revenue
 - **Efficiency by Distance:** Operating margin vs. distance scatter plot
-- **Operating Profit by Aircraft:** Ranked bar chart showing aircraft profitability
+- **Operating Profit by Aircraft:** Ranked bar chart showing aircraft and route profitability
 - **Fleet Utilization:** Total flight time by aircraft type
 - **Unit Revenue/Cost by Aircraft:** RASM and CASM comparison charts
 
@@ -134,19 +129,65 @@ Key visualizations:
 - **Economics Scatter (by Origin):** RASM vs. CASM by hub
 - **Top 10 / Worst 10 Routes:** Ranked by Operating Contribution
 - **Operating Profit by Route:** Detailed route-level profitability
-
+- **Operating Profit by Aircraft:** Ranked bar chart showing aircraft and route profitability
+- **Fleet Utilization:** Total flight time by aircraft type
+- **Unit Revenue/Cost by Aircraft:** RASM and CASM comparison charts
+- **Network Map:** Hub-and-spoke visualization with size indicating revenue
+- **Efficiency by Distance:** Operating margin vs. distance scatter plot
+- 
 ---
 
-## 🚀 How to Use the Dashboard
+##  How to Use the Dashboard
 
 1. **Select a Hub:** Click on a large circle (e.g., Chicago - ORD) on the map.
 2. **Identify the "Bleeders":** Look at the **"Worst 10 Routes"** chart to see the biggest money-losers.
-3. **Diagnose the Cause:** Click a red dot on the **Hub Economics Scatter Plot**.
-4. **Pinpoint the Aircraft:** Watch the **Fleet Matrix** highlight to see if a specific aircraft type is underperforming on that route.
+3. **Diagnose the Cause:** Click a red dot on the **Economics Scatter (by Route)**.
+4. **Pinpoint the Aircraft and the route:** Watch the **Operating Profit by Route** highlight to see the specific aircraft type underperforming on that route.
 
 ---
 
-## 📁 Repository Structure
+## Key Findings
+
+### 1. Hub Dominance Confirms Network Strategy
+As expected, United's major hubs—**Chicago-O'Hare (ORD)**, **Denver (DEN)**, **Houston-Intercontinental (IAH)**, **Los Angeles (LAX)**, **Newark (EWR)**, **San Francisco (SFO)**, and **Washington-Dulles (IAD)**—account for a disproportionately high percentage of operating margin. This validates the airline's hub-and-spoke network design, where connecting traffic through hubs maximizes operational efficiency.
+
+### 2. Hub-to-Hub Routes Are Top Performers
+The most profitable routes consistently connect one major hub to another (e.g., ORD → SFO, EWR → LAX). These routes benefit from high business travel demand, premium pricing, and efficient aircraft utilization.
+
+### 3. Underperforming Routes Share Common Patterns
+The worst-performing routes exhibit a consistent pattern:
+- **Low Load Factor:** Insufficient demand to fill available seats
+- **Older Aircraft:** Higher operating costs due to aging airframes
+- **Fleet Mismatch:** Less efficient aircraft types deployed on routes where they underperform
+
+### 4. Fleet Composition Heavily Favors Narrow-Bodies
+The fleet is highly dependent on narrow-body aircraft, primarily the **Boeing 737 family** and **Airbus A320 family**. Wide-body aircraft such as the Boeing 777 and Boeing 787 are used on domestic routes, but these instances are relatively rare.
+
+### 5. Older Airframes Have Higher Unit Costs
+A clear trend emerges in the Unit Cost by Aircraft analysis: older variants of the 737 and A320 families exhibit higher CASM values. This is likely due to lower fuel efficiency and higher maintenance costs associated with aging airframes.
+
+### 6. Load Factors Meet Industry Benchmarks
+The average load factor across the fleet exceeds **80%**, which aligns with industry standards for domestic operations and indicates effective capacity management.
+
+### 7. Wide-Bodies Excel on Long-Haul Routes
+When deployed on longer-distance flights, wide-body aircraft demonstrate improved efficiency metrics. Their higher fixed costs are offset by the ability to spread those costs over greater distances.
+
+---
+
+## Limitations
+
+### 1. Cargo Revenue Data Unavailable
+The analysis excludes cargo revenue and volume data. This limitation **may skew results toward favoring narrow-body aircraft**, as wide-body aircraft typically use their larger cargo holds to offset higher operating costs. 
+
+However, the impact may be mitigated by the fact that most wide-body aircraft configured for domestic routes use **high-density seating configurations**, prioritizing passenger capacity over cargo space.
+
+### 2. Data Sample Limitations
+- The DB1B dataset represents a **10% sample** of airline tickets, which may not capture all route-level fare variations
+- Award tickets (frequent flyer redemptions) are included but valued at their nominal fee rather than equivalent cash fares
+
+---
+
+##  Repository Structure
 
 ```
 ├── README.md                    # This file
@@ -168,7 +209,7 @@ Key visualizations:
 
 ---
 
-## ⚙️ Setup & Requirements
+##  Setup & Requirements
 
 ### Python Dependencies
 
@@ -192,14 +233,14 @@ Download the following datasets from [BTS TranStats](https://www.transtats.bts.g
 
 ---
 
-## 🔗 Links
+##  Links
 
 - **Tableau Public Dashboard:** [View Interactive Dashboard](#) *(Add your Tableau Public link)*
 - **BTS TranStats:** [https://www.transtats.bts.gov/](https://www.transtats.bts.gov/)
 
 ---
 
-## 👤 Author
+##  Author
 
 **Hrishikesh Sajeev**
 
@@ -208,7 +249,7 @@ Download the following datasets from [BTS TranStats](https://www.transtats.bts.g
 
 ---
 
-## 📄 License
+##  License
 
 This project is for educational and portfolio purposes. Data sourced from the U.S. Department of Transportation Bureau of Transportation Statistics.
 
