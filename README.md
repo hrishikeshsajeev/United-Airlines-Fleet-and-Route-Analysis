@@ -1,7 +1,8 @@
 # United Airlines Route Profitability Analysis
 
-![Fleet Analysis Dashboard](dashboards/fleet_analysis_dashboard.png)
 > *An interactive diagnostic tool for analyzing network efficiency, fleet performance, and unit economics.*
+
+**[View Interactive Dashboard on Tableau Public](https://public.tableau.com/app/profile/hrishikesh.sajeev/vizzes)**
 
 ---
 
