@@ -134,8 +134,7 @@ Key visualizations:
 - **Fleet Utilization:** Total flight time by aircraft type
 - **Unit Revenue/Cost by Aircraft:** RASM and CASM comparison charts
 - **Network Map:** Hub-and-spoke visualization with size indicating revenue
-- **Efficiency by Distance:** Operating margin vs. distance scatter plot
-- 
+- **Efficiency by Distance:** Operating margin vs. distance scatter plot 
 ---
 
 ##  How to Use the Dashboard
